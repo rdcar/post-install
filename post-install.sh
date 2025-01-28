@@ -38,7 +38,8 @@ sudo apt install -y \
     jdownloader \
     peazip \
     foliate \
-    vlc
+    vlc \
+    bpytop
 
 # Instalar RQuickShare via Snap (não disponível via APT)
 echo "Instalando o RQuickShare..."
