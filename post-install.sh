@@ -39,11 +39,24 @@ sudo apt install -y \
     peazip \
     foliate \
     vlc \
-    bpytop
+    bpytop \
+    ubuntu-restricted-extras \
+    
 
 # Instalar RQuickShare via Snap (não disponível via APT)
 echo "Instalando o RQuickShare..."
 sudo snap install rquickshare
+
+# Instalar o Anaconda
+echo "Instalando o Anaconda..."
+# Baixando o script de instalação do Anaconda
+wget https://repo.anaconda.com/archive/Anaconda3-2023.11-Linux-x86_64.sh -O anaconda.sh
+
+# Executando o script de instalação
+bash anaconda.sh -b
+
+# Limpando o arquivo de instalação
+rm anaconda.sh
 
 # Finalizando
 echo "Instalação concluída!"
