@@ -10,7 +10,8 @@ O script adiciona os respositórios necessários e instala as seguintes aplicaç
 * PeaZip,
 * Foliate,
 * RQuickShare,
-* VLC Media Player.
+* VLC Media Player,
+* BPyTop
 
 ### Passos do script:
 1. **Atualização do sistema:** `sudo apt update && sudo apt upgrade -y`
