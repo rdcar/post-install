@@ -13,7 +13,7 @@ O script adiciona os respositórios necessários e instala as seguintes aplicaç
 * VLC Media Player,
 * BPyTop,
 * Ubuntu-restricted-extras,
-* Anaconda
+* Anaconda 24.10 + Python 3.12
 
 ### Como usar:
 1. Crie um arquivo com o nome `post-install.sh`.
