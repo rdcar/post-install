@@ -11,7 +11,9 @@ O script adiciona os respositórios necessários e instala as seguintes aplicaç
 * Foliate,
 * RQuickShare,
 * VLC Media Player,
-* BPyTop
+* BPyTop,
+* Ubuntu-restricted-extras,
+* Anaconda
 
 ### Passos do script:
 1. **Atualização do sistema:** `sudo apt update && sudo apt upgrade -y`
