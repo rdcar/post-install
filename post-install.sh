@@ -5,18 +5,24 @@ echo "Atualizando o sistema..."
 sudo apt update && sudo apt upgrade -y
 
 # Instalar dependências necessárias
-echo "Instalando apliações via apt..."
-sudo apt install nala ubuntu-restricted-extras bpytop  -y
+echo "Instalando aplicações via apt..."
+sudo apt install nala ubuntu-restricted-extras bpytop wget -y
 
-echo "Instalando o Anaconda..."
-# Baixando o script de instalação do Anaconda
-wget https://repo.anaconda.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh -O anaconda.sh
+# Verificar se o Flatpak está instalado
+if ! command -v flatpak &> /dev/null; then
+    echo "Flatpak não encontrado, instalando..."
+    sudo apt install flatpak -y
+else
+    echo "Flatpak já está instalado."
+fi
 
-# Executando o script de instalação
-bash anaconda.sh -b
-
-# Limpando o arquivo de instalação
-rm anaconda.sh
+# Adicionar o repositório Flathub, se não estiver presente
+if ! flatpak remote-list | grep -q 'flathub'; then
+    echo "Adicionando o repositório Flathub..."
+    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+else
+    echo "Repositório Flathub já está adicionado."
+fi
 
 # Lista de aplicativos Flatpak a serem instalados
 apps=(
@@ -53,6 +59,17 @@ done
 # Open a specific URL in the default browser
 xdg-open https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
 xdg-open https://github.com/Martichou/rquickshare/releases
+
+# Baixando o script de instalação do Anaconda
+echo "Instalando o Anaconda..."
+# Baixando o script de instalação do Anaconda
+wget https://repo.anaconda.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh -O anaconda.sh
+
+# Executando o script de instalação
+bash anaconda.sh -b
+
+# Limpando o arquivo de instalação
+rm anaconda.sh
 
 # Finalizando
 echo "Instalação concluída!"
