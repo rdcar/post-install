@@ -1,6 +1,6 @@
-### Script para automatizar a instalação de programas no Ubuntu 24.04 LTS.
+### Script to automate the installation of applications and bug fixes for Ubuntu 24.04 LTS based distros.
 
-O script adiciona os respositórios necessários e instala as seguintes aplicações:
+The script adds the necessary repositories and installs the following applications:
 * VLC Media Player (org.videolan.VLC)
 * Spotify (com.spotify.Client)
 * GIMP (org.gimp.GIMP)
@@ -19,14 +19,23 @@ O script adiciona os respositórios necessários e instala as seguintes aplicaç
 * CPU-X (io.github.thetumultuousunicornofdarkness.cpu-x)
 * NetworkDisplays (org.gnome.NetworkDisplays)
 * Github CLI (apt)
+* Nala (apt)
 
-### Como usar:
-1. Crie um arquivo com o nome `post-install.sh`.
-2. Dê permissão de execução: 
-   ```bash
-   chmod +x post-install.sh
-   ```
-3. Execute o script:
-   ```bash
-   ./post-install.sh
-   ```
+### Fixes the common Dummy Output error on some sound cards in kernel 6.8+
+
+    echo "options snd-hda-intel dmic_detect=0" | sudo tee -a /etc/modprobe.d/alsa-base.conf echo "blacklist snd_soc_skl" | sudo tee -a /etc/modprobe.d/blacklist.conf
+
+### Adds firewall rules for GSConnect / KDE Connect / Zorin Connect
+
+```bash 
+sudo ufw allow 1714:1764/udp 
+sudo ufw allow 1714:1764/tcp 
+sudo ufw reload
+```
+
+### How to use:
+1. Create a file named `post-install.sh`.
+2. Grant execution permission:
+`chmod +x post-install.sh`
+4. Run the script:
+   `./post-install.sh`
