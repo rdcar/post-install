@@ -81,6 +81,9 @@ bash anaconda.sh -b
 # Limpando o arquivo de instalação
 rm anaconda.sh
 
+# Consertando o problema do Dummy Output no kernel 6.8+
+echo "options snd-hda-intel dmic_detect=0" | sudo tee -a /etc/modprobe.d/alsa-base.conf echo "blacklist snd_soc_skl" | sudo tee -a /etc/modprobe.d/blacklist.conf
+
 # Finalizando
 echo "Instalação concluída!"
 echo "Reinicie o sistema para garantir que todas as mudanças entrem em efeito corretamente."
