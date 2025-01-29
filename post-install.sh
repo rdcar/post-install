@@ -43,6 +43,7 @@ apps=(
     "io.gitlab.adhami3310.Impression"
     "io.github.thetumultuousunicornofdarkness.cpu-x"
     "org.gnome.NetworkDisplays"
+    "io.github.thetumultuousunicornofdarkness.cpu-x"
 )
 
 # Instalando os aplicativos
