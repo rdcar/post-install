@@ -67,22 +67,14 @@ for app in "${apps[@]}"; do
 done
 
 # Open a specific URL in the default browser
-xdg-open https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+xdg-open https://code.visualstudio.com/
 xdg-open https://github.com/Martichou/rquickshare/releases
 
 # Baixando o script de instalação do Anaconda
 echo "Instalando o Anaconda..."
-# Baixando o script de instalação do Anaconda
 wget https://repo.anaconda.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh -O anaconda.sh
-
-# Executando o script de instalação
 bash anaconda.sh -b
-
-# Limpando o arquivo de instalação
 rm anaconda.sh
-
-# Consertando o problema do Dummy Output no kernel 6.8+
-echo "options snd-hda-intel dmic_detect=0" | sudo tee -a /etc/modprobe.d/alsa-base.conf echo "blacklist snd_soc_skl" | sudo tee -a /etc/modprobe.d/blacklist.conf
 
 # Adicionando regras no Firewall para GSConnect / KDE Connect / Zorin Connect
 sudo ufw allow 1714:1764/udp
