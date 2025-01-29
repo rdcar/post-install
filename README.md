@@ -18,6 +18,7 @@ O script adiciona os respositórios necessários e instala as seguintes aplicaç
 * Impression (io.gitlab.adhami3310.Impression)
 * CPU-X (io.github.thetumultuousunicornofdarkness.cpu-x)
 * NetworkDisplays (org.gnome.NetworkDisplays)
+* Github CLI (apt)
 
 ### Como usar:
 1. Crie um arquivo com o nome `post-install.sh`.
