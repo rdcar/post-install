@@ -20,6 +20,8 @@ The script adds the necessary repositories and installs the following applicatio
 * NetworkDisplays (org.gnome.NetworkDisplays)
 * Github CLI (apt)
 * Nala (apt)
+* Neofetch (apt)
+* wget & curl (apt)
 
 ### Fixes the common Dummy Output error on some sound cards in kernel 6.8+
 
