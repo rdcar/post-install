@@ -6,7 +6,7 @@ sudo apt update && sudo apt upgrade -y
 
 # Instalar dependências necessárias
 echo "Instalando aplicações via apt..."
-sudo apt install nala ubuntu-restricted-extras bpytop wget -y
+sudo apt install nala ubuntu-restricted-extras bpytop wget curl neofetch -y
 
 # Instalar GitHub CLI
 (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
