@@ -89,6 +89,9 @@ sudo ufw allow 1714:1764/udp
 sudo ufw allow 1714:1764/tcp
 sudo ufw reload
 
+### Fixes the common Dummy Output error on some Intel sound cards in kernel 6.8+
+echo "options snd-hda-intel dmic_detect=0" | sudo tee -a /etc/modprobe.d/alsa-base.conf echo "blacklist snd_soc_skl" | sudo tee -a /etc/modprobe.d/blacklist.conf
+
 # Finalizando
 echo "Instalação concluída!"
 echo "Reinicie o sistema para garantir que todas as mudanças entrem em efeito corretamente."
