@@ -23,7 +23,7 @@ The script adds the necessary repositories and installs the following applicatio
 * Neofetch (apt)
 * wget & curl (apt)
 
-### Fixes the common Dummy Output error on some sound cards in kernel 6.8+
+### Fixes the common audio Dummy Output & HDMI-output error on some soundboards on kernel 6.8+
 
     echo "options snd-hda-intel dmic_detect=0" | sudo tee -a /etc/modprobe.d/alsa-base.conf echo "blacklist snd_soc_skl" | sudo tee -a /etc/modprobe.d/blacklist.conf
 
