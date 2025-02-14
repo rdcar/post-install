@@ -22,6 +22,7 @@ The script adds the necessary repositories and installs the following applicatio
 * Nala (apt)
 * Neofetch (apt)
 * wget & curl (apt)
+* Tailscale
 
 ### Fixes the common audio Dummy Output & HDMI-output error on some soundboards on kernel 6.8+
 
