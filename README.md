@@ -27,6 +27,10 @@ The script adds the necessary repositories and installs the following applicatio
 ### Fixes the common audio Dummy Output & HDMI-output error on some soundboards on kernel 6.8+
 
     echo "options snd-hda-intel dmic_detect=0" | sudo tee -a /etc/modprobe.d/alsa-base.conf echo "blacklist snd_soc_skl" | sudo tee -a /etc/modprobe.d/blacklist.conf
+### Fix for blurry image on brave browser when using fractional scaling resolutions
+
+    brave://flags/
+    select "Preferred Ozone platform" change to "Wayland"
 
 ### Adds firewall rules for GSConnect / KDE Connect / Zorin Connect
 
