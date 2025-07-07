@@ -55,6 +55,7 @@ apps=(
     "io.gitlab.adhami3310.Impression"
     "io.github.thetumultuousunicornofdarkness.cpu-x"
     "org.gnome.NetworkDisplays"
+    "com.mattjakeman.ExtensionManager"
 )
 
 # Instalando os aplicativos
