@@ -75,7 +75,7 @@ xdg-open https://github.com/Martichou/rquickshare/releases
 
 # Baixando o script de instalação do Anaconda
 echo "Instalando o Anaconda..."
-wget https://repo.anaconda.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh -O anaconda.sh
+curl -O https://repo.anaconda.com/archive/Anaconda3-2025.06-0-Linux-x86_64.sh -O anaconda.sh
 bash anaconda.sh -b
 rm anaconda.sh
 
