@@ -2,7 +2,7 @@
 
 # Script de pós-instalação para Ubuntu e derivados
 # Autor: [@rdcar]
-# Data: 29/09/2025
+# Data: 29/10/2025
 
 set -euo pipefail  # Sair em caso de erro, variável não definida ou falha em pipe
 IFS=$'\n\t'       # Definir separador de campo interno
@@ -195,7 +195,7 @@ if [[ $REPLY =~ ^[Ss]$ ]]; then
     ANACONDA_INSTALLER="Anaconda3-latest-Linux-x86_64.sh"
     
     # Baixar a versão mais recente
-    if wget -q --show-progress " https://repo.anaconda.com/archive/Anaconda3-2025.06-0-Linux-x86_64.sh" -O "$ANACONDA_INSTALLER"; then
+    if wget -q --show-progress "https://repo.anaconda.com/archive/Anaconda3-2025.06-1-Linux-x86_64.sh" -O "$ANACONDA_INSTALLER"; then
         # Instalar em modo batch no diretório home do usuário
         bash "$ANACONDA_INSTALLER" -b -p "$HOME/anaconda3"
         
