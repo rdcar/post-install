@@ -56,6 +56,12 @@ check_success() {
     fi
 }
 
+# Adiciona repositórios necessários
+print_message "Habilitando repositórios universe e multiverse..."
+sudo add-apt-repository universe -y
+sudo add-apt-repository multiverse -y
+check_success "Repositórios adicionados"
+
 # Atualizar o sistema
 print_message "Atualizando repositórios e sistema..."
 sudo apt update && sudo apt upgrade -y
