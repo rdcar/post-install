@@ -16,3 +16,20 @@ Clone o repositório ou baixe o arquivo `post-install.sh`, abra o terminal na pa
 ```bash
 chmod +x post-install.sh
 sudo ./post-install.sh
+```
+
+## 📦 Softwares Instalados (Flatpak)
+Navegador: LibreWolf
+
+Comunicação: ZapZap (WhatsApp), Thunderbird
+
+Escritório: OnlyOffice, Obsidian, Calibre, Foliate
+
+Desenvolvimento: VS Code, DevToolbox
+
+Sistema: Flatseal, Warehouse, Mission Center, CPU-X
+
+## 📝 Notas
+O script realiza backups automáticos do arquivo /etc/default/grub antes de qualquer alteração.
+
+A instalação de Flatpaks é forçada para o nível do sistema (--system), garantindo que os apps fiquem disponíveis para todos os usuários.
