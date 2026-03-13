@@ -33,21 +33,18 @@ sudo apt install -y --ignore-missing $PACOTES_APT
 check_success "Instalação de pacotes APT"
 
 # ==========================================================================
-# 3. CORREÇÃO DE HARDWARE (GRUB)
+# 3. CORREÇÃO DE HARDWARE (AMD PMC)
 # ==========================================================================
-print_message "Verificando configurações do GRUB (Correção i8042.nopnp)..."
+print_message "Configurando módulo amd_pmc (enable_stb=1)..."
 
-# Backup com timestamp
-sudo cp /etc/default/grub "/etc/default/grub.bak_$(date +%s)"
+# Cria ou sobrescreve o arquivo de configuração de forma não interativa
+echo "options amd_pmc enable_stb=1" | sudo tee /etc/modprobe.d/amd_pmc.conf > /dev/null
+check_success "Criação do arquivo /etc/modprobe.d/amd_pmc.conf"
 
-if grep -q "i8042.nopnp" /etc/default/grub; then
-    echo "[-] O parâmetro i8042.nopnp já está presente. Nenhuma alteração necessária."
-else
-    echo "[+] Aplicando correção i8042.nopnp para teclado/touchpad..."
-    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 i8042.nopnp"/' /etc/default/grub
-    sudo update-grub
-    check_success "Atualização do GRUB"
-fi
+# Atualização do initramfs (Geralmente necessária para aplicar módulos no boot)
+print_message "Atualizando initramfs para aplicar alterações de módulo..."
+sudo update-initramfs -u
+check_success "Atualização do initramfs"
 
 # ==========================================================================
 # 4. CONFIGURAÇÃO DE FIREWALL (KDE CONNECT)
