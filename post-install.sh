@@ -35,16 +35,34 @@ check_success "Instalação de pacotes APT"
 # ==========================================================================
 # 3. CORREÇÃO DE HARDWARE (AMD PMC)
 # ==========================================================================
-print_message "Configurando módulo amd_pmc (enable_stb=1)..."
+#print_message "Configurando módulo amd_pmc (enable_stb=1)..."
 
 # Cria ou sobrescreve o arquivo de configuração de forma não interativa
-echo "options amd_pmc enable_stb=1" | sudo tee /etc/modprobe.d/amd_pmc.conf > /dev/null
-check_success "Criação do arquivo /etc/modprobe.d/amd_pmc.conf"
+#echo "options amd_pmc enable_stb=1" | sudo tee /etc/modprobe.d/amd_pmc.conf > /dev/null
+#check_success "Criação do arquivo /etc/modprobe.d/amd_pmc.conf"
 
 # Atualização do initramfs (Geralmente necessária para aplicar módulos no boot)
-print_message "Atualizando initramfs para aplicar alterações de módulo..."
-sudo update-initramfs -u
-check_success "Atualização do initramfs"
+#print_message "Atualizando initramfs para aplicar alterações de módulo..."
+#sudo update-initramfs -u
+#check_success "Atualização do initramfs"
+
+# ==========================================================================
+# 3. CORREÇÃO DE HARDWARE (GRUB)
+# ==========================================================================
+print_message "Verificando configurações do GRUB (Correção i8042.nopnp)..."
+
+# Backup com timestamp
+sudo cp /etc/default/grub "/etc/default/grub.bak_$(date +%s)"
+
+
+if grep -q "i8042.nopnp" /etc/default/grub; then
+    echo "[-] O parâmetro i8042.nopnp já está presente. Nenhuma alteração necessária."
+else
+    echo "[+] Aplicando correção i8042.nopnp para teclado/touchpad..."
+    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 i8042.nopnp"/' /etc/default/grub
+    sudo update-grub
+    check_success "Atualização do GRUB"
+fi
 
 # ==========================================================================
 # 4. CONFIGURAÇÃO DE FIREWALL (KDE CONNECT)
@@ -72,7 +90,10 @@ APPS=(
     io.github.kolunmi.Bazaar io.github.peazip.PeaZip io.github.thetumultuousunicornofdarkness.cpu-x
     io.gitlab.adhami3310.Impression io.gitlab.librewolf-community io.missioncenter.MissionCenter
     md.obsidian.Obsidian me.iepure.devtoolbox org.localsend.localsend_app
-    org.mozilla.Thunderbird org.onlyoffice.desktopeditors org.qbittorrent.qBittorrent
+    org.mozilla.Thunderbird org.onlyoffice.desktopeditors org.qbittorrent.qBittorrent 
+    org.jdownloader.JDownloader org.jousse.vincent.Pomodorolm page.kramo.Sly
+    re.fossplant.songrec org.gnome.gitlab.somas.Apostrophe com.discordapp.Discord
+    
 )
 
 for app in "${APPS[@]}"; do
@@ -81,4 +102,52 @@ done
 
 check_success "Instalação de Flatpaks"
 
-print_message "Script finalizado! Recomenda-se reiniciar o sistema para aplicar as mudanças de hardware."
+# ==========================================================================
+# 6. CONSERVAÇÃO DE BATERIA LENOVO (LIMITE 80%)
+# ==========================================================================
+print_message "Configurando modo de conservação de bateria (limite 80%)..."
+DEVICE_ID="VPC2004:00"
+ACPI_PATH="/sys/bus/platform/drivers/ideapad_acpi/$DEVICE_ID"
+
+if [ -d "$ACPI_PATH" ]; then
+    # Ativa o limite imediatamente para a sessão atual
+    echo 1 | sudo tee "$ACPI_PATH/conservation_mode" > /dev/null
+    
+    # Cria o serviço systemd para persistência nos próximos boots
+    sudo bash -c "cat > /etc/systemd/system/battery-conservation.service <<EOF
+[Unit]
+Description=Enable Lenovo Battery Conservation Mode
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'echo 1 > $ACPI_PATH/conservation_mode'
+
+[Install]
+WantedBy=multi-user.target
+EOF"
+
+    sudo systemctl enable --now battery-conservation.service > /dev/null 2>&1
+    check_success "Serviço de conservação de bateria ativado"
+else
+    echo -e "\e[1;33m⚠ Caminho $ACPI_PATH não encontrado. O módulo ideapad_acpi está ativo?\e[0m"
+fi
+
+# ==========================================================================
+# 7. COMPORTAMENTO DA TAMPA (LID SWITCH)
+# ==========================================================================
+print_message "Desabilitando suspensão ao fechar a tampa do notebook..."
+
+# O comando sed procura a linha HandleLidSwitch (comentada ou não) e a altera para 'ignore'
+sudo sed -i 's/^#*HandleLidSwitch=.*/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
+
+# Caso a linha não exista no arquivo original por algum motivo, ele a adiciona ao final
+if ! grep -q "^HandleLidSwitch=ignore" /etc/systemd/logind.conf; then
+    echo "HandleLidSwitch=ignore" | sudo tee -a /etc/systemd/logind.conf > /dev/null
+fi
+
+check_success "Configuração do arquivo logind.conf"
+
+# ==========================================================================
+# FINALIZAÇÃO
+# ==========================================================================
+print_message "Script finalizado! Recomenda-se reiniciar o sistema para aplicar as mudanças de hardware e systemd."
